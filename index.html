@@ -4,17 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Smart Toast - Den Intelligente Brødrister</title>
+    <script src="https://js.stripe.com/v3/"></script>
     <style>
         body { font-family: Arial, sans-serif; text-align: center; margin: 0; padding: 0; background-color: #f8f9fa; }
         header { background: #ff9800; padding: 20px; color: white; font-size: 24px; }
         .container { padding: 40px; }
-        .btn { background: #ff9800; color: white; padding: 15px 30px; text-decoration: none; border-radius: 5px; font-size: 18px; }
+        .btn { background: #ff9800; color: white; padding: 15px 30px; text-decoration: none; border-radius: 5px; font-size: 18px; cursor: pointer; }
         .btn:hover { background: #e68900; }
         .features, .products { display: flex; justify-content: center; gap: 20px; padding: 20px; }
         .box { background: white; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); transition: transform 0.3s ease-in-out; }
         .box:hover { transform: scale(1.05); }
         .contact, .checkout { background: white; padding: 20px; margin: 40px auto; width: 50%; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
-        input, textarea { width: 100%; padding: 10px; margin: 10px 0; border: 1px solid #ccc; border-radius: 5px; }
+        input, select, textarea { width: 100%; padding: 10px; margin: 10px 0; border: 1px solid #ccc; border-radius: 5px; }
         .submit-btn { background: #ff9800; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; }
         .submit-btn:hover { background: #e68900; }
     </style>
@@ -48,26 +49,33 @@
             <h3>Smart Toast Basic</h3>
             <p>Standardmodellen med AI-ristefunktion.</p>
             <p>Pris: 499 DKK</p>
-            <a href="#checkout" class="btn">Køb nu</a>
+            <button class="btn" onclick="purchase('basic')">Køb nu</button>
         </div>
         <div class="box">
             <h3>Smart Toast Pro</h3>
             <p>Avanceret model med emoji-print og app-styring.</p>
             <p>Pris: 799 DKK</p>
-            <a href="#checkout" class="btn">Køb nu</a>
+            <button class="btn" onclick="purchase('pro')">Køb nu</button>
+        </div>
+        <div class="box">
+            <h3>Smart Toast Ultra</h3>
+            <p>Den ultimative model med stemmestyring og avanceret ristning.</p>
+            <p>Pris: 999 DKK</p>
+            <button class="btn" onclick="purchase('ultra')">Køb nu</button>
         </div>
     </div>
     
     <div id="checkout" class="checkout">
         <h2>Checkout</h2>
-        <form>
+        <form id="payment-form">
             <input type="text" placeholder="Dit navn" required>
             <input type="email" placeholder="Din email" required>
             <input type="text" placeholder="Adresse" required>
-            <select required>
+            <select id="product-select" required>
                 <option value="">Vælg produkt</option>
                 <option value="basic">Smart Toast Basic - 499 DKK</option>
                 <option value="pro">Smart Toast Pro - 799 DKK</option>
+                <option value="ultra">Smart Toast Ultra - 999 DKK</option>
             </select>
             <button type="submit" class="submit-btn">Gennemfør betaling</button>
         </form>
@@ -82,5 +90,26 @@
             <button type="submit" class="submit-btn">Send</button>
         </form>
     </div>
+
+    <script>
+        const stripe = Stripe('din-public-key-her');
+
+        function purchase(product) {
+            document.getElementById('product-select').value = product;
+            document.getElementById('checkout').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        document.getElementById('payment-form').addEventListener('submit', async (event) => {
+            event.preventDefault();
+            const product = document.getElementById('product-select').value;
+            const response = await fetch('/create-checkout-session', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ product })
+            });
+            const session = await response.json();
+            stripe.redirectToCheckout({ sessionId: session.id });
+        });
+    </script>
 </body>
 </html>
