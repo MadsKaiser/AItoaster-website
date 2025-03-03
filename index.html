@@ -10,10 +10,10 @@
         .container { padding: 40px; }
         .btn { background: #ff9800; color: white; padding: 15px 30px; text-decoration: none; border-radius: 5px; font-size: 18px; }
         .btn:hover { background: #e68900; }
-        .features { display: flex; justify-content: center; gap: 20px; padding: 20px; }
-        .feature-box { background: white; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); transition: transform 0.3s ease-in-out; }
-        .feature-box:hover { transform: scale(1.05); }
-        .contact { background: white; padding: 20px; margin: 40px auto; width: 50%; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        .features, .products { display: flex; justify-content: center; gap: 20px; padding: 20px; }
+        .box { background: white; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); transition: transform 0.3s ease-in-out; }
+        .box:hover { transform: scale(1.05); }
+        .contact, .checkout { background: white; padding: 20px; margin: 40px auto; width: 50%; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
         input, textarea { width: 100%; padding: 10px; margin: 10px 0; border: 1px solid #ccc; border-radius: 5px; }
         .submit-btn { background: #ff9800; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; }
         .submit-btn:hover { background: #e68900; }
@@ -25,22 +25,52 @@
     <div class="container">
         <h2>Gør din morgenmad sjovere med AI!</h2>
         <p>Den første brødrister, der husker din perfekte ristning og kan printe beskeder på din toast!</p>
-        <a href="#" class="btn">Forudbestil nu</a>
+        <a href="#checkout" class="btn">Bestil nu</a>
     </div>
     
     <div class="features">
-        <div class="feature-box">
+        <div class="box">
             <h3>🔍 AI-Personlig Toast</h3>
             <p>Lær din favorit-ristegrad og gem indstillinger automatisk.</p>
         </div>
-        <div class="feature-box">
+        <div class="box">
             <h3>🎨 Print Mønstre & Emojis</h3>
             <p>Tilføj sjove designs eller beskeder på din toast.</p>
         </div>
-        <div class="feature-box">
+        <div class="box">
             <h3>📱 Smart App</h3>
             <p>Styr din brødrister direkte fra din telefon.</p>
         </div>
+    </div>
+    
+    <div class="products">
+        <div class="box">
+            <h3>Smart Toast Basic</h3>
+            <p>Standardmodellen med AI-ristefunktion.</p>
+            <p>Pris: 499 DKK</p>
+            <a href="#checkout" class="btn">Køb nu</a>
+        </div>
+        <div class="box">
+            <h3>Smart Toast Pro</h3>
+            <p>Avanceret model med emoji-print og app-styring.</p>
+            <p>Pris: 799 DKK</p>
+            <a href="#checkout" class="btn">Køb nu</a>
+        </div>
+    </div>
+    
+    <div id="checkout" class="checkout">
+        <h2>Checkout</h2>
+        <form>
+            <input type="text" placeholder="Dit navn" required>
+            <input type="email" placeholder="Din email" required>
+            <input type="text" placeholder="Adresse" required>
+            <select required>
+                <option value="">Vælg produkt</option>
+                <option value="basic">Smart Toast Basic - 499 DKK</option>
+                <option value="pro">Smart Toast Pro - 799 DKK</option>
+            </select>
+            <button type="submit" class="submit-btn">Gennemfør betaling</button>
+        </form>
     </div>
     
     <div class="contact">
